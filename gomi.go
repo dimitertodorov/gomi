@@ -5,11 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"net/http/cookiejar"
-	"net/http"
-	"net/url"
 	"github.com/dimitertodorov/gomi/omi"
-	"encoding/xml"
 	"github.com/prometheus/common/version"
 )
 
@@ -17,7 +13,7 @@ func main() {
 
 	var (
 		showVersion = flag.Bool("version", false, "Print version information.")
-		//configFile = flag.String("config.file", "alertmanager.yml", "Alertmanager configuration file name.")
+		configFile = flag.String("config.file", "gomi.json", "Gomi configuration file name.")
 		//dataDir    = flag.String("storage.path", "data/", "Base path for data storage.")
 		//omiUrl     = flag.String("omi.url", "", "mesh peer ID (default: MAC address)")
 		//omiUsername   = flag.String("omi.username", "admin", "mesh peer nickname")
@@ -30,45 +26,21 @@ func main() {
 		os.Exit(0)
 	}
 
-	cookieJar, _ := cookiejar.New(nil)
 
-	client := &http.Client{
-		Jar: cookieJar,
-	}
-
-	req, err := http.NewRequest("GET", "https://dev-omi.tools.cihs.gov.on.ca/opr-web/rest/9.10/event_list", nil)
-	req.SetBasicAuth("admin","admin")
-
-	resp, err := client.Do(req)
-
-	_, err = ioutil.ReadAll(resp.Body)
-
-	// error handle
+	configContents, err := ioutil.ReadFile(*configFile)
 	if err != nil {
-		fmt.Printf("error = %s \n", err);
+		panic(fmt.Sprintf("Could not read config file %v", err))
+	}
+	client := omi.NewClient(configContents)
+	if eventList, err := client.GetEventList(); err != nil {
+		panic(fmt.Errorf("Cannot Get Events %v", err))
+	}else{
+		for i, event := range eventList.Event {
+			fmt.Printf("[%v] Got Event %v - %v\n", i, event.Title, event.Id)
+		}
 	}
 
-	// Print response
-	omiPath, err := url.Parse("https://dev-omi.tools.cihs.gov.on.ca")
-	cooks := client.Jar.Cookies(omiPath)
 
-	for _, v := range cooks {
-		fmt.Printf("COOKIE: %s = %s\n\n", v.Name, v.Value);
-	}
-
-	resp, err = client.Get("https://dev-omi.tools.cihs.gov.on.ca/opr-web/rest/9.10/event_list")
-
-
-	data, err := ioutil.ReadAll(resp.Body)
-
-	fmt.Printf("%s ", data)
-
-	var el omi.EventList
-	if err := xml.Unmarshal(data, &el); err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(el)
 
 
 

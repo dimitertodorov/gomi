@@ -14,3 +14,22 @@ build:
 tarball:
     files:
         - VERSION
+        - README.md
+
+
+tarball:
+    prefix: .
+    files:
+        - consoles
+        - console_libraries
+        - documentation/examples/prometheus.yml
+        - LICENSE
+        - NOTICE
+crossbuild:
+    platforms:
+        - linux/amd64
+        - linux/386
+        - darwin/amd64
+        - darwin/386
+        - windows/amd64
+        - windows/386

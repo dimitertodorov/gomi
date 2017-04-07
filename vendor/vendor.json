@@ -63,6 +63,12 @@
 			"revisionTime": "2016-11-21T14:22:35Z"
 		},
 		{
+			"checksumSHA1": "VBXGouqOkPe3OkeJnyUBkx3aZXA=",
+			"path": "github.com/imdario/mergo",
+			"revision": "d806ba8c21777d504a2090a2ca4913c750dd3a33",
+			"revisionTime": "2017-03-26T20:45:27Z"
+		},
+		{
 			"checksumSHA1": "Farach1xcmsQYrhiUfkwF2rbIaE=",
 			"path": "github.com/julienschmidt/httprouter",
 			"revision": "1e01b2bdbae8edb393fcf555732304f34d192fc9",
