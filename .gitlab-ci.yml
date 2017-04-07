@@ -6,6 +6,7 @@ stages:
 test-gomi:
   stage: test
   script:
-    - cp -r ../gomi /home/gitlab-runner/golang/src/github.com/dimitertodorov/gomi
+    - rm -rf /home/gitlab-runner/golang/src/github.com/dimitertodorov/gomi
+    - rsync -av --exclude='.git/' ../gomi /home/gitlab-runner/golang/src/github.com/dimitertodorov
     - cd /home/gitlab-runner/golang/src/github.com/dimitertodorov/gomi
     - go test -v ./omi
