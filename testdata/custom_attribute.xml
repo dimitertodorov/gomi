@@ -1,0 +1,4 @@
+<custom_attribute xmlns="http://www.hp.com/2009/software/opr/data_model" self="https://dev-omi.toolsinternal.local/opr-web/rest/9.10/event_list/7d9d518d-310d-485d-9f14-43a3c3f5ca71/custom_attribute_list/GOLANG_NAME" type="urn:x-hp:2009:software:data_model:opr:type:event:custom_attribute" version="1.0">
+    <name>GOLANG_RUN</name>
+    <value>GOLANG_VALUE</value>
+</custom_attribute>

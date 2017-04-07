@@ -1,0 +1,6 @@
+<custom_attribute_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.hp.com/2009/software/opr/data_model" self="https://dev-omi.toolsinternal.local/opr-web/rest/9.10/event_list/7d9d518d-310d-485d-9f14-43a3c3f5ca71/custom_attribute_list" type="urn:x-hp:2009:software:data_model:opr:type:event:custom_attribute_list" version="1.0">
+    <custom_attribute self="https://dev-omi.toolsinternal.local/opr-web/rest/9.10/event_list/7d9d518d-310d-485d-9f14-43a3c3f5ca71/custom_attribute_list/GOLANG_NAME" type="urn:x-hp:2009:software:data_model:opr:type:event:custom_attribute" version="1.0">
+        <name>GOLANG_NAME</name>
+        <value>GOLANG_VALUE</value>
+    </custom_attribute>
+</custom_attribute_list>

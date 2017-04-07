@@ -1,0 +1,15 @@
+<annotation_list xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.hp.com/2009/software/opr/data_model" self="https://dev-omi.toolsinternal.local/opr-web/rest/9.10/event_list/8b2102d6-e242-44f5-bc02-c38811344b34/annotation_list" type="urn:x-hp:2009:software:data_model:opr:type:event:annotation_list" version="1.0">
+    <annotation self="https://dev-omi.toolsinternal.local/opr-web/rest/9.10/event_list/8b2102d6-e242-44f5-bc02-c38811344b34/annotation_list/1462ac86-aa34-491c-afda-d5e5d561c51f" type="urn:x-hp:2009:software:data_model:opr:type:event:annotation" version="1.0">
+        <id>1462ac86-aa34-491c-afda-d5e5d561c51f</id>
+        <event_ref target_role="urn:x-hp:2009:software:data_model:opr:relationship:event:is_related_to:event" type="urn:x-hp:2009:software:data_model:opr:type:reference:event:event_ref" version="1.1">
+            <target_id>8b2102d6-e242-44f5-bc02-c38811344b34</target_id>
+            <target_type>urn:x-hp:2009:software:data_model:opr:type:event</target_type>
+            <target_href>
+                https://dev-omi.toolsinternal.local/opr-web/rest/9.10/event_list/1462ac86-aa34-491c-afda-d5e5d561c51f
+            </target_href>
+        </event_ref>
+        <author>admin</author>
+        <time_created>2017-04-06T20:23:56.154-04:00</time_created>
+        <text>asdasdasd</text>
+    </annotation>
+</annotation_list>
