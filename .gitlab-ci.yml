@@ -1,17 +1,11 @@
 # GitLab CI Build/Test
 
 stages:
-  - build
   - test
 
-build-my-project:
-  stage: build
-  script:
-    - cd $CURRENT_BUILD_PATH
-    - promu build
-
-test-my-project:
+test-gomi:
   stage: test
   script:
-    - cd $CURRENT_BUILD_PATH
-    - go test ./omi
+    - cp -r ../gomi /home/gitlab-runner/golang/src/github.com/dimitertodorov/gomi
+    - cd /home/gitlab-runner/golang/src/github.com/dimitertodorov/gomi
+    - go test -v ./omi
