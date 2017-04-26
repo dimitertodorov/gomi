@@ -10,6 +10,7 @@ import (
 	"github.com/satori/go.uuid"
 	"fmt"
 	"regexp"
+	"time"
 )
 
 var (
@@ -48,15 +49,17 @@ var (
 
 	//RelateCi
 	//RelatedCiHints
-	ciHints = RelatedCiHints{Hint: []string{"@@vrops-lab.tools.cihs.gov.on.ca"}}
+	ciHints = RelatedCiHints{Hint: []string{"@@ctsbigdcemadm34.cihs.ad.gov.on.ca"}}
 
 	newEvent = Event{
 		Xmlns:           EventXmlns,
 		Title:           fmt.Sprintf("GOMI TEST EVENT %v", runUuid.String()),
-		Key:             fmt.Sprintf("GOLANGEVENT:%s:major", runUuid.String()),
+		Key:             fmt.Sprintf("GOLANG OMI EVENT:%s:major", runUuid.String()),
 		State:           "open",
 		Severity:        "major",
-		CloseKeyPattern: fmt.Sprintf("GOLANGEVENT:%s:<*>normal", runUuid.String()),
+		CloseKeyPattern: fmt.Sprintf("GOLANG OMI EVENT:%s:<*>normal", runUuid.String()),
+		Application:	"TORCA_GOMI",
+		Object:	"test_object",
 		RelatedCiHints:  &ciHints,
 	}
 
@@ -177,12 +180,16 @@ func TestUpdate(t *testing.T) {
 		mock403(client, t, EventListPath, "PUT")
 		mockPing(client, t)
 		mockSuccess(client, t, "PUT", EventListPath, "event", 201)
+	}else{
+		time.Sleep(time.Second * 6)
 	}
+
 	query := fmt.Sprintf("key LIKE \"$25%v$25\"", runUuid.String())
 	eventList, err := client.QueryEventList(query)
 	if err != nil {
 		t.Fatalf("Error: %s", err)
 	}
+
 	event = eventList.Event[0]
 
 	event.Description = "TESTDESC"

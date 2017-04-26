@@ -120,6 +120,18 @@ type RelatedCi struct {
 	XmlType    string          `json:"type,omitempty" xml:"type,attr,omitempty"`
 	TargetId   string                 `json:"target_id,omitempty" xml:"target_id,omitempty"`
 	TargetType string                 `json:"target_type,omitempty" xml:"target_type,omitempty"`
+	ConfigurationItem *ConfigurationItem	`json:",omitempty" xml:",omitempty"`
+}
+
+type ConfigurationItem struct {
+	XMLName    xml.Name        `xml:"configuration_item,omitempty"`
+	XmlType    string          `json:"type,omitempty" xml:"type,attr,omitempty"`
+	Id	string	`json:"id,omitempty" xml:"id,omitempty"`
+	Name	string	`json:"name,omitempty" xml:"name,omitempty"`
+	Type	string	`json:"type,omitempty" xml:"type,omitempty"`
+	TypeLabel	string	`json:"type_label,omitempty" xml:"type_label,omitempty"`
+	PrimaryDnsName	string	`json:"primary_dns_name,omitempty" xml:"primary_dns_name,omitempty"`
+	DiscoveredOsName	string	`json:"discovered_os_name,omitempty" xml:"discovered_os_name,omitempty"`
 }
 
 type MatchInfo struct {
