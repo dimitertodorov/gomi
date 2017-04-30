@@ -17,7 +17,7 @@ func (c *CharData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 }
 
 func (n CharData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(struct{
+	return e.EncodeElement(struct {
 		S string `xml:",innerxml"`
 	}{
 		S: fmt.Sprintf("<![CDATA[%v]]>", n.string),

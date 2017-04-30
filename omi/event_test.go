@@ -1,11 +1,11 @@
 package omi
 
 import (
-	"testing"
+	"encoding/xml"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"encoding/xml"
 	"strings"
+	"testing"
 )
 
 var (

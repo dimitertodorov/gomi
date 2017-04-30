@@ -1,31 +1,29 @@
 package omi
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
 	"encoding/json"
-	"io/ioutil"
-	"gopkg.in/h2non/gock.v1"
-	"net/http"
-	"github.com/satori/go.uuid"
 	"fmt"
+	"github.com/satori/go.uuid"
+	"github.com/stretchr/testify/assert"
+	"gopkg.in/h2non/gock.v1"
+	"io/ioutil"
+	"net/http"
 	"regexp"
+	"testing"
 	"time"
 )
 
 var (
 	//TURN On Real TEST Here
-	mockOnly = true
+	mockOnly = false
 
-
-	configFile    = "../testdata/gomi.json"
+	configFile = "../testdata/gomi.json"
 
 	secureModifyCookie = &http.Cookie{
 		Name:   "secureModifyToken",
 		Value:  "5bcaf756371567ba91a9d8195770e5739afda223",
 		Path:   "/",
 		Domain: "dev-omi.tools.cihs.gov.on.ca",
-
 	}
 	secureModifyTokenMatchFunc = func(req *http.Request, ereq *gock.Request) (bool, error) {
 		header := req.Header.Get("X-Secure-Modify-Token")
@@ -49,22 +47,22 @@ var (
 
 	//RelateCi
 	//RelatedCiHints
-	ciHints = RelatedCiHints{Hint: []string{"@@ctsbigdcemadm34.cihs.ad.gov.on.ca"}}
+	ciHints = RelatedCiHints{Hint: []string{"@@CTSbiGdcEMadm34"}}
 
 	newEvent = Event{
 		Xmlns:           EventXmlns,
-		Title:           fmt.Sprintf("GOMI TEST EVENT %v", runUuid.String()),
+		Title:           fmt.Sprintf("GOMI DEMO EVENT %v", runUuid.String()),
 		Key:             fmt.Sprintf("GOLANG OMI EVENT:%s:major", runUuid.String()),
 		State:           "open",
 		Severity:        "major",
 		CloseKeyPattern: fmt.Sprintf("GOLANG OMI EVENT:%s:<*>normal", runUuid.String()),
-		Application:	"TORCA_GOMI",
-		Object:	"test_object",
+		Application:     "TORCA_GOMI",
+		Object:          "test_object",
 		RelatedCiHints:  &ciHints,
 	}
 
 	//Matchers
-	secureModifyTokenMatcher = gock.NewBasicMatcher()
+	secureModifyTokenMatcher        = gock.NewBasicMatcher()
 	missingSecureModifyTokenMatcher = gock.NewBasicMatcher()
 
 	xmlMap = make(map[string][]byte)
@@ -115,7 +113,7 @@ func TestGet(t *testing.T) {
 
 	if events, err := client.GetEventList(); err != nil {
 		t.Fatalf("Error getting events %v", err)
-	}else{
+	} else {
 		assert.NotEqual(t, "", events.Event[0].Id, "get event list")
 	}
 
@@ -124,7 +122,7 @@ func TestGet(t *testing.T) {
 func TestGetUnauth(t *testing.T) {
 	client := NewClient(configContents)
 
-		if mockOnly {
+	if mockOnly {
 		defer gock.Off() // Flush pending mocks after test execution
 		mock403(client, t, EventListPath, "GET")
 		mockPing(client, t)
@@ -180,7 +178,7 @@ func TestUpdate(t *testing.T) {
 		mock403(client, t, EventListPath, "PUT")
 		mockPing(client, t)
 		mockSuccess(client, t, "PUT", EventListPath, "event", 201)
-	}else{
+	} else {
 		time.Sleep(time.Second * 6)
 	}
 
@@ -291,17 +289,17 @@ func mockPing(client *Client, t *testing.T) {
 }
 
 func mock403(client *Client, t *testing.T, path, method string) {
-	if (method == "GET") {
+	if method == "GET" {
 		gock.New(client.ClientConfig.BaseUrl).
 			Get(path).
 			Reply(403).
 			BodyString("UNAUTHORIZED")
-	} else if (method == "POST") {
+	} else if method == "POST" {
 		gock.New(client.ClientConfig.BaseUrl).
 			Post(path).
 			Reply(403).
 			BodyString("UNAUTHORIZED")
-	} else if (method == "PUT") {
+	} else if method == "PUT" {
 		gock.New(client.ClientConfig.BaseUrl).
 			Put(path).
 			Reply(403).

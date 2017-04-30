@@ -1,27 +1,20 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
-	"os"
 	"github.com/dimitertodorov/gomi/omi"
 	"github.com/prometheus/common/version"
-	"text/template"
+	"io/ioutil"
+	"os"
 )
-
-var tmpl = `{{range .Event}}
-{{.Id}} - {{.Title}}{{if .RelatedCi}} [{{.RelatedCi.ConfigurationItem.Name}}] {{end}}- {{.Title}}{{end}}`
 
 func main() {
 
 	var (
 		showVersion = flag.Bool("version", false, "Print version information.")
-		configFile = flag.String("config.file", "gomi.json", "Gomi configuration file name.")
-		//template    = flag.String("template.path", "data/", "Base path for data storage.")
-		//omiUrl     = flag.String("omi.url", "", "mesh peer ID (default: MAC address)")
-		//omiUsername   = flag.String("omi.username", "admin", "mesh peer nickname")
-		//omiPassword   = flag.String("omi.password", "admin", "password to join the peer network (empty password disables encryption)")
+		configFile  = flag.String("config.file", "gomi.json", "Gomi configuration file name.")
 	)
 	flag.Parse()
 
@@ -30,7 +23,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	t := template.New("Person template")
+	//t := template.New("Person template")
 
 	configContents, err := ioutil.ReadFile(*configFile)
 	if err != nil {
@@ -39,23 +32,22 @@ func main() {
 	client := omi.NewClient(configContents)
 	if eventList, err := client.GetEventList(); err != nil {
 		panic(fmt.Errorf("Cannot Get Events %v", err))
-	}else{
-		t, err := t.Parse(tmpl)
-		if err != nil {
-			fmt.Printf("Err %v", err)
-			return
-		}
-
-		err = t.Execute(os.Stdout, eventList)
-		if err != nil {
-			fmt.Printf("Err %v", err)
-			return
+	} else {
+		//t, err := t.Parse(tmpl)
+		//if err != nil {
+		//	fmt.Printf("Err %v", err)
+		//	return
+		//}
+		//
+		//err = t.Execute(os.Stdout, eventList)
+		//if err != nil {
+		//	fmt.Printf("Err %v", err)
+		//	return
+		//}
+		for _, event := range eventList.Event {
+			st, _ := json.MarshalIndent(event, "", "\t")
+			fmt.Printf("Got Event %v\n", string(st[:]))
 		}
 	}
-
-
-
-
-
 
 }

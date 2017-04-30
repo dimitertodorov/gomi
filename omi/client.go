@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"net/http"
 	//"net/http/cookiejar"
-	"encoding/json"
-	"net/http/cookiejar"
-	"io/ioutil"
-	"encoding/xml"
-	"log"
-	"os"
-	"net/url"
-	"github.com/imdario/mergo"
 	"bytes"
+	"encoding/json"
+	"encoding/xml"
+	"github.com/imdario/mergo"
+	"io/ioutil"
+	"log"
+	"net/http/cookiejar"
+	"net/url"
+	"os"
 )
 
 type ClientConfig struct {
@@ -89,9 +89,9 @@ func (client *Client) Do(method, path string, body []byte) (*http.Response, erro
 		return nil, err
 	}
 	if (resp.StatusCode == 403) || (resp.StatusCode == 401) {
-		if (client.Ping()) {
+		if client.Ping() {
 			resp, err = client.Do(method, path, body)
-		}else{
+		} else {
 			err = fmt.Errorf("Could not Ping after 401/403", err)
 			return nil, err
 		}
@@ -131,7 +131,6 @@ func (client *Client) GetEventList() (*EventList, error) {
 	return &el, err
 }
 
-
 func (client *Client) QueryEventList(query string) (*EventList, error) {
 	var el EventList
 	encodedQuery := &url.URL{Path: query}
@@ -157,7 +156,7 @@ func (client *Client) NewEvent() (*Event, error) {
 	return &event, nil
 }
 
-func (client *Client) CreateEvent(event *Event) (error) {
+func (client *Client) CreateEvent(event *Event) error {
 	//event.Client = client
 	result, err := xml.Marshal(event)
 	if err != nil {
@@ -178,7 +177,7 @@ func (client *Client) CreateEvent(event *Event) (error) {
 	return nil
 }
 
-func (client *Client) UpdateEvent(event *Event) (error) {
+func (client *Client) UpdateEvent(event *Event) error {
 	var updateEvent = event
 	event.Xmlns = EventXmlns
 	updateEvent.clean()
@@ -206,7 +205,7 @@ func (client *Client) UpdateEvent(event *Event) (error) {
 	return nil
 }
 
-func (client *Client) AddAnnotation(event *Event, annotation *Annotation) (error) {
+func (client *Client) AddAnnotation(event *Event, annotation *Annotation) error {
 	annotation.Xmlns = EventXmlns
 	if event.Id == "" {
 		return fmt.Errorf("Cannot AddAnnotation without Id")
@@ -231,7 +230,7 @@ func (client *Client) AddAnnotation(event *Event, annotation *Annotation) (error
 	return nil
 }
 
-func (client *Client) AddCustomAttribute(event *Event, ca *CustomAttribute) (error) {
+func (client *Client) AddCustomAttribute(event *Event, ca *CustomAttribute) error {
 	ca.Xmlns = EventXmlns
 	if event.Id == "" {
 		return fmt.Errorf("Cannot AddCustomAttribute without Id")

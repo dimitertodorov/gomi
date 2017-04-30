@@ -1,13 +1,13 @@
 package omi
 
 import (
-	"time"
 	"encoding/xml"
 	"fmt"
+	"time"
 )
 
 var (
-	wsTimeLayout = "2006-01-02T15:04:05-07:00"
+	wsTimeLayout       = "2006-01-02T15:04:05-07:00"
 	wsCustomTimeLayout = "1/2/2006 04:04:05 PM"
 )
 
@@ -42,7 +42,7 @@ func (c *wsCustomTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 }
 
 func (c wsTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(struct{
+	return e.EncodeElement(struct {
 		S string `xml:",innerxml"`
 	}{
 		S: fmt.Sprintf("%v", c.Time.Format(wsTimeLayout)),
@@ -50,7 +50,7 @@ func (c wsTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 
 func (c wsCustomTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(struct{
+	return e.EncodeElement(struct {
 		S string `xml:",innerxml"`
 	}{
 		S: fmt.Sprintf("%v", c.Time.Format(wsCustomTimeLayout)),
