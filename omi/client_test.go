@@ -15,7 +15,7 @@ import (
 
 var (
 	//TURN On Real TEST Here
-	mockOnly = false
+	mockOnly = true
 
 	configFile = "../testdata/gomi.json"
 
