@@ -8,8 +8,9 @@ before_script:
   - echo $CI_BUILD_REF
   - echo $CI_PROJECT_DIR
   - make promu
-  - rm -rf $GOPATH/src/$REPO_NAME
-  - cp -r $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
+  - mkdir -p $GOPATH/src/$REPO_NAME
+  - setopt -s glob_dots
+  - mv $CI_PROJECT_DIR/* $GOPATH/src/$REPO_NAME
   - cd $GOPATH/src/$REPO_NAME
 
 stages:
@@ -30,7 +31,6 @@ release-job:
     - mkdir -p .build/linux-amd64
     - mkdir -p .build/windows-amd64
     - mkdir -p ./.release/
-    - ls -lathr
     - cat .promu.yml
     - env GOOS=linux GOARCH=amd64 promu build --prefix .build/linux-amd64
     - env GOOS=windows GOARCH=amd64 promu build --prefix .build/windows-amd64
