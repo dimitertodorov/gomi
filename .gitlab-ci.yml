@@ -21,6 +21,8 @@ test-project:
   script:
     - go get -u github.com/kardianos/govendor
     - govendor test +local  -v
+  except:
+    - tags
 
 release-job:
   stage: build
@@ -28,10 +30,10 @@ release-job:
     - mkdir -p .build/linux-amd64
     - mkdir -p .build/windows-amd64
     - mkdir -p ./.release/
-    - env PREFIX=.build/linux-amd64 GOOS=linux GOARCH=amd64 make build
-    - env PREFIX=.build/windows-amd64 GOOS=windows GOARCH=amd64 make build
-    - env GOOS=linux GOARCH=amd64 promu tarball --prefix ./release .build/linux-amd64
-    - env GOOS=windows GOARCH=amd64 promu tarball --prefix ./release .build/windows-amd64
+    - env GOOS=linux GOARCH=amd64 promu build --prefix .build/linux-amd64
+    - env GOOS=windows GOARCH=amd64 promu build --prefix .build/windows-amd64
+    - env GOOS=linux GOARCH=amd64 promu tarball --prefix ./.release/ .build/linux-amd64
+    - env GOOS=windows GOARCH=amd64 promu tarball --prefix ./.release/ .build/windows-amd64
   artifacts:
     paths:
     - .release/*.tar.gz
