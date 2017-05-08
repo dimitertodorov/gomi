@@ -16,11 +16,14 @@ build:
 tarball:
   prefix: .
   files:
-      - VERSION
-      - README.md
+    - gomi.json.sample
+    - VERSION
+    - README.md
 
 crossbuild:
     platforms:
         - linux/amd64
         - darwin/amd64
         - windows/amd64
+
+

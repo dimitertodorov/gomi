@@ -14,7 +14,7 @@ func main() {
 
 	var (
 		showVersion = flag.Bool("version", false, "Print version information.")
-		configFile  = flag.String("config.file", "gomi.json", "Gomi configuration file name.")
+		configFile  = flag.String("config.file", "gomi.json.sample", "Gomi configuration file name.")
 	)
 	flag.Parse()
 
