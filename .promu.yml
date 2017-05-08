@@ -4,6 +4,8 @@ build:
     binaries:
         - name: gomi
           path: ./
+        - name: nagomi
+          path: ./cmd/nagomi
     flags: -a -tags netgo
     ldflags: |
         -X {{repoPath}}/vendor/github.com/prometheus/common/version.Version={{.Version}}
@@ -12,24 +14,13 @@ build:
         -X {{repoPath}}/vendor/github.com/prometheus/common/version.BuildUser={{user}}@{{host}}
         -X {{repoPath}}/vendor/github.com/prometheus/common/version.BuildDate={{date "20060102-15:04:05"}}
 tarball:
-    files:
-        - VERSION
-        - README.md
+  prefix: .
+  files:
+      - VERSION
+      - README.md
 
-
-tarball:
-    prefix: .
-    files:
-        - consoles
-        - console_libraries
-        - documentation/examples/prometheus.yml
-        - LICENSE
-        - NOTICE
 crossbuild:
     platforms:
         - linux/amd64
-        - linux/386
         - darwin/amd64
-        - darwin/386
         - windows/amd64
-        - windows/386

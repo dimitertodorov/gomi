@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	log "github.com/Sirupsen/logrus"
 	"github.com/dimitertodorov/gomi/omi"
 	"github.com/prometheus/common/version"
 	"io/ioutil"
 	"os"
 	"strings"
-	log "github.com/Sirupsen/logrus"
 )
 
 var (
@@ -40,7 +40,7 @@ func init() {
 func main() {
 	var (
 		showVersion = flag.Bool("version", false, "Print version information.")
-		configFile  = flag.String("config.file", "gomi.json", "Gomi configuration file name.")
+		configFile  = flag.String("config.file", "gomi.sample.json", "Gomi configuration file name.")
 		//Try these domains for OMI resolver.
 		dnsDomains = flag.String("dns-domains", "cihs.ad.gov.on.ca,service.cihs.gov.on.ca,mgmt.cihs.gov.on.ca", "DNS Domains to try for CI Resolution")
 
