@@ -1,0 +1,26 @@
+#!/bin/bash
+go run cmd/nagomi/nagomi.go --notification-type=host \
+--contact="TestContact" \
+--contactemail="dimiter.todorov@ontario.ca" \
+--type=PROBLEM \
+--escalated=0 \
+--author="NoteAuthor" \
+--comments="NoteComment" \
+--host="ctsbikdcapint02.service.cihs.gov.on.ca" \
+--hostaddress="10.200.2.96" \
+--hostalias="ucp-node-2" \
+--hostdisplayname="ctsbikdcapint02" \
+--hoststate="UP" \
+--hoststateid=0 \
+--lasthoststate=DOWN \
+--lasthoststateid=1 \
+--hoststatetype=SOFT \
+--currentattempt=1 \
+--maxattempts=5 \
+--hosteventid=445567 \
+--hostproblemid=0 \
+--lasthostproblemid=4978 \
+--hostoutput="Sample Output from NAGIOS ALERT" \
+--longhostoutput="LONG TEXT HERE \n\nOIJADOIJSDOIJ" \
+--datetime="Mon May 8 00:30:28 CDT 2017" \
+--create
