@@ -30,6 +30,7 @@ release-job:
     - mkdir -p .build/linux-amd64
     - mkdir -p .build/windows-amd64
     - mkdir -p ./.release/
+    - cat .promu.yml
     - env GOOS=linux GOARCH=amd64 promu build --prefix .build/linux-amd64
     - env GOOS=windows GOARCH=amd64 promu build --prefix .build/windows-amd64
     - env GOOS=linux GOARCH=amd64 promu tarball --prefix ./.release/ .build/linux-amd64
